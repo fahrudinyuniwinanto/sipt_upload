@@ -93,39 +93,7 @@ $CI->load->model('Users_model');
                             ER+
                         </div>
                     </li>
-                    <li><a href="<?= base_url() ?>laporanWilayah"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span><span class="label label-primary pull-right"></span></a></li>
-                    <li><a href="<?= base_url() ?>backend"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Infografis</span><span class="label label-primary pull-right"></span></a></li>
-                    <li><a href="<?= base_url() ?>sync_capil"><i class="fa fa-users"></i> <span class="nav-label">Data Capil</span><span class="label label-primary pull-right"></span></a></li>
-                     <li><a href="<?= base_url() ?>data_kpcpen"><i class="fa fa-shield"></i> <span class="nav-label">Data KPCPEN</span><span class="label label-primary pull-right"></span></a></li>
-                    
-                   <li><a href="<?= base_url() ?>laporan"><i class="fa fa-refresh"></i> <span class="nav-label">Sinkronisasi Data</span><span class="label label-primary pull-right"></span></a></li>
-                   <!-- <li><a href="<?= base_url() ?>laporanwilayah"><i class="fa fa-database"></i> <span class="nav-label">Laporan</span><span class="label label-primary pull-right"></span></a></li> -->
-                   <li><a href="<?= base_url() ?>data_bermasalah"><i class="fa fa-database"></i> <span class="nav-label">Data Bermasalah</span><span class="label label-primary pull-right"></span></a></li>
-                   <li><a href="<?= base_url() ?>sync_data_bermasalah"><i class="fa fa-database"></i> <span class="nav-label">Sinkronasi Data Bermasalah</span><span class="label label-primary pull-right"></span></a></li>
-
-                    <li class="">
-                        <?php if (is_allow('M_USERS')) : ?>
-                            <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Pengguna</span> <span class="fa arrow"></span></a>
-                        <?php endif; ?>
-                        <ul class="nav nav-second-level">
-                            <li><a href="<?= base_url() ?>users">Users</a></li>
-                            <li><a href="<?= base_url() ?>user_group">User Group</a></li>
-                            <li><a href="<?= base_url() ?>user_access">User Access</a></li>
-                            <li><a href="<?= base_url() ?>master_access">Master Access</a></li>
-                        </ul>
-                    </li>
-                    <li class="">
-                        <?php if (is_allow('M_SY_CONFIG')) : ?>
-                            <a href="index.html"><i class="fa fa-wrench"></i> <span class="nav-label">Sistem</span> <span class="fa arrow"></span></a>
-                        <?php endif; ?>
-                        <?php //die($this->db->last_query());  
-                        ?>
-                        <ul class="nav nav-second-level">
-                            <li><a href="<?= base_url() ?>sy_config">Konfigurasi</a></li>
-                            <li><a href="<?= base_url() ?>kategori">Kategori</a></li>
-                        </ul>
-                    </li>
-
+                    <li><a href="<?= base_url() ?>Tbnilaidata_gizi"><i class="fa fa-database"></i> <span class="nav-label">Import Data Nilai Gizi</span><span class="label label-primary pull-right"></span></a></li>
                 </ul>
 
             </div>

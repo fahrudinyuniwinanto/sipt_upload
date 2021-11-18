@@ -58,6 +58,35 @@ class ReadExcel extends CI_Controller
     redirect($_SERVER['HTTP_REFERER']); //redirect back
   }
 
+  
+  public function importNilaiGizi()
+  {
+    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+    $spreadsheet = $reader->load($_FILES['filenilaigizi']['tmp_name']);
+    $d = $spreadsheet->getSheet(0)->toArray();
+    $data = $spreadsheet->getActiveSheet()->toArray();
+    $jmlDataTerinsert = 0;
+
+    // $i = 1;
+    // for ($i=0; $i <3 ; $i++) { 
+    //   unset($data[$i]); //remove header
+    // }
+
+    foreach ($data as $k => $v) {
+    
+        $this->db->insert('tbnilaidata_gizi', [
+          'NILAI' => $v[3],
+          'PUSKESMAS' => 11,
+          'DESA' => 11,
+          'TAHUN' => 2020,
+          'TGL_ENTRY'=>date('Y-m-d H:i:s'),
+        ]);
+        $jmlDataTerinsert++;
+      }
+    $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> <strong>' . $jmlDataTerinsert . ' data KPCPEN</strong> berhasil diimport ke sql!');
+    redirect($_SERVER['HTTP_REFERER']); //redirect back
+  }
+
   public function importKependudukan()
   {
     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
@@ -84,7 +113,7 @@ class ReadExcel extends CI_Controller
         'isactive' => 1,
       ]);
     }
-    $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> <strong>' . count($d)-1 . ' data kependudukan</strong> berhasil diimport ke sql!');
+    $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> <strong>' . intval(count($d)-1) . ' data kependudukan</strong> berhasil diimport ke sql!');
     redirect($_SERVER['HTTP_REFERER']); //redirect back
   }
 
