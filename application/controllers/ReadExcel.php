@@ -73,12 +73,25 @@ class ReadExcel extends CI_Controller
     // }
 
     foreach ($data as $k => $v) {
-    
+     /*  $hasit = $this->db->get_where('tbnilaidata_gizi',[
+        'TAHUN' => $this->input->post('tahun'),
+          'BULAN' => $this->input->post('bulan'),
+          'PUSKESMAS' => 11,//ambil dari sesion pelogin
+          'DESA' => $this->input->post('desa'),
+          'KODE' => $v[4],
+      ])->row();
+      if(isset($hasit)){
+        break;//skip loopingan
+      }
+ */
         $this->db->insert('tbnilaidata_gizi', [
           'NILAI' => $v[3],
-          'PUSKESMAS' => 11,
-          'DESA' => 11,
-          'TAHUN' => 2020,
+          'SUMBERDATA' => "G01",
+          'TAHUN' => $this->input->post('tahun'),
+          'BULAN' => $this->input->post('bulan'),
+          'PUSKESMAS' => 11,//ambil dari sesion pelogin
+          'DESA' => $this->input->post('desa'),
+          'KODE' => $v[4],
           'TGL_ENTRY'=>date('Y-m-d H:i:s'),
         ]);
         $jmlDataTerinsert++;

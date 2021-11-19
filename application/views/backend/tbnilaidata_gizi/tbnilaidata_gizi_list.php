@@ -22,8 +22,8 @@
             <div class="col-md-1">
                 <?php echo anchor(site_url('tbnilaidata_gizi/create'),'Create', 'class="btn btn-primary"'); ?>
             </div>
+            <form enctype="multipart/form-data" action="<?= base_url() ?>ReadExcel/importNilaiGizi" method="post">
             <div class="col-md-4">
-                            <form enctype="multipart/form-data" action="<?= base_url() ?>ReadExcel/importNilaiGizi" method="post">
                                 <div class="input-group">
                                     <input type="file" class="form-control" name="filenilaigizi" />
                                     <span class="input-group-btn">
@@ -32,31 +32,33 @@
                                         </button>
                                     </span>
                                 </div>
-                            </form>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-2">
+                            <select class="form-control" name="tahun">
+                            <?php for ($i=2000; $i <date('Y')+1 ; $i++) { ?>
+                                <option value="<?=$i?>"><?=$i?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control" name="bulan">
+                            <?php for ($i=1; $i <13 ; $i++) { ?>
+                                <option value="<?=$i?>"><?=str_bulan($i)?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
             
             
             <div class="col-md-1 text-right">
             </div>
             <div class="col-md-3 text-right">
-                <form action="<?php echo site_url('tbnilaidata_gizi/index'); ?>" class="form-inline" method="get">
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
-                        <span class="input-group-btn">
-                            <?php 
-                                if ($q <> '')
-                                {
-                                    ?>
-                                    <a href="<?php echo site_url('tbnilaidata_gizi'); ?>" class="btn btn-default">Reset</a>
-                                    <?php
-                                }
-                            ?>
-                          <button class="btn btn-primary" type="submit">Search</button>
-                        </span>
-                    </div>
-                </form>
-            </div>
+                            <select class="form-control" name="desa">
+                            <?php foreach ($this->db->get_where('desa',['id_kecamatan'=>11])->result() as $k => $v) { ?>
+                                <option value="<?=$v->id_desa?>"><?=$v->nama_desa?></option>
+                            <?php } ?>
+                            </select>
+                </div>
+            </form>
         </div>
         <table class="table table-bordered table-hover table-condensed" style="margin-bottom: 10px">
             <thead class="thead-light">
