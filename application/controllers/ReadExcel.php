@@ -72,18 +72,25 @@ class ReadExcel extends CI_Controller
     //   unset($data[$i]); //remove header
     // }
 
+    unset($data[0]);
     foreach ($data as $k => $v) {
-     /*  $hasit = $this->db->get_where('tbnilaidata_gizi',[
+      if($v[4]==""||$v[4]==NULL){
+        // die("asdfkljasdf".$k);
+        continue;
+      }
+       $hasit = $this->db->get_where('tbnilaidata_gizi',[
         'TAHUN' => $this->input->post('tahun'),
           'BULAN' => $this->input->post('bulan'),
           'PUSKESMAS' => 11,//ambil dari sesion pelogin
           'DESA' => $this->input->post('desa'),
           'KODE' => $v[4],
       ])->row();
+
+      //print_r($hasit);die("asdfasdfasdadsf");
       if(isset($hasit)){
-        break;//skip loopingan
+        continue;//skip loopingan
       }
- */
+ 
         $this->db->insert('tbnilaidata_gizi', [
           'NILAI' => $v[3],
           'SUMBERDATA' => "G01",

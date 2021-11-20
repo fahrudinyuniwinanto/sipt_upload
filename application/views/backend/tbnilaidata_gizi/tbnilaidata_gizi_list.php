@@ -87,9 +87,9 @@
 			<td><?php echo $tbnilaidata_gizi->SUMBERDATA ?></td>
 			<td><?php echo $tbnilaidata_gizi->KODE ?></td>
 			<td><?php echo $tbnilaidata_gizi->TAHUN ?></td>
-			<td><?php echo $tbnilaidata_gizi->BULAN ?></td>
-			<td><?php echo $tbnilaidata_gizi->PUSKESMAS ?></td>
-			<td><?php echo $tbnilaidata_gizi->DESA ?></td>
+			<td><?php echo str_bulan($tbnilaidata_gizi->BULAN) ?></td>
+			<td><?php echo @$this->db->get_where("puskesmas",["id"=>$tbnilaidata_gizi->PUSKESMAS])->row()->puskesmas ?></td>
+			<td><?php echo $this->db->get_where('desa',['id_desa'=>$tbnilaidata_gizi->DESA])->row()->nama_desa  ?></td>
 			<td><?php echo $tbnilaidata_gizi->TGL_ENTRY ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
