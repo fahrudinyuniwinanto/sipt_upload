@@ -245,6 +245,12 @@ $dayList = array(
 return $dayList[$day];
 }
 
+//aplikasi sipt dinkes
+function get_kec_by_pus($idpus){
+    $CI = get_instance();
+    return $CI->db->query("SELECT bb.* from puskesmas as aa inner join kecamatan as bb on UPPER(aa.kecamatan)=UPPER(bb.nama_kecamatan) where aa.pkid=$idpus")->row()->id_kecamatan;
+}
+
 function str_bulan($i){
     $bulan = array (
         1 =>   'Januari',

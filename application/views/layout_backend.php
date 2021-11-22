@@ -57,6 +57,7 @@ $CI = &get_instance();
 lookup();
 //panggil sf_helper
 $CI->load->model('Users_model');
+$CI->load->model('User_model');
 // $jml_upload_risalah      = $CI->Upload_risalah_model->total_rows();
 // Penarikan jumlah data untuk syarat
 
@@ -80,7 +81,7 @@ $CI->load->model('Users_model');
                                 <?php } ?>
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?= $CI->Users_model->get_by_id($this->session->userdata('id_user'))->fullname ?></strong>
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Puskesmas <?=$this->session->userdata('username') ?></strong>
                                     </span> <span class="text-muted text-xs block">Tentang <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="#"><?= $this->session->userdata('email') ?></a></li>

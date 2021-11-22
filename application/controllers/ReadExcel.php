@@ -81,22 +81,28 @@ class ReadExcel extends CI_Controller
        $hasit = $this->db->get_where('tbnilaidata_gizi',[
         'TAHUN' => $this->input->post('tahun'),
           'BULAN' => $this->input->post('bulan'),
-          'PUSKESMAS' => 11,//ambil dari sesion pelogin
+          'PUSKESMAS' => $this->session->userdata('id_puskesmas'),//ambil dari sesion pelogin
           'DESA' => $this->input->post('desa'),
           'KODE' => $v[4],
+          'SUMBERDATA' =>$this->session->userdata('id_program'),
       ])->row();
 
       //print_r($hasit);die("asdfasdfasdadsf");
       if(isset($hasit)){
+        $this->db->where('ID',$hasit->ID);
+        $this->db->update('tbnilaidata_gizi', [
+          'NILAI' => $v[3],
+          'TGL_ENTRY'=>date('Y-m-d H:i:s'),
+        ]);
         continue;//skip loopingan
       }
  
         $this->db->insert('tbnilaidata_gizi', [
           'NILAI' => $v[3],
-          'SUMBERDATA' => "G01",
+          'SUMBERDATA' => $this->session->userdata('id_program'),
           'TAHUN' => $this->input->post('tahun'),
           'BULAN' => $this->input->post('bulan'),
-          'PUSKESMAS' => 11,//ambil dari sesion pelogin
+          'PUSKESMAS' => $this->session->userdata('id_puskesmas'),//ambil dari sesion pelogin
           'DESA' => $this->input->post('desa'),
           'KODE' => $v[4],
           'TGL_ENTRY'=>date('Y-m-d H:i:s'),

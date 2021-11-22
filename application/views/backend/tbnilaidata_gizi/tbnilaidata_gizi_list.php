@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h2><b>List Tbnilaidata_gizi</b></h2>
+                    <h2><b>List Nilai Gizi</b></h2>
                     <?php if ($this->session->userdata('message') != '') {?>
                     <div class="alert alert-success alert-dismissable">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -19,20 +19,11 @@
                 </div>
                 <div class="ibox-content">
         <div class="row" style="margin-bottom: 10px">
-            <div class="col-md-1">
-                <?php echo anchor(site_url('tbnilaidata_gizi/create'),'Create', 'class="btn btn-primary"'); ?>
+            <div class="col-md-0">
+                <?php //echo anchor(site_url('tbnilaidata_gizi/create'),'Create', 'class="btn btn-primary"'); ?>
             </div>
             <form enctype="multipart/form-data" action="<?= base_url() ?>ReadExcel/importNilaiGizi" method="post">
-            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="file" class="form-control" name="filenilaigizi" />
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-info remove">
-                                            <span class="glyphicon glyphicon-upload"></span> Upload Excel
-                                        </button>
-                                    </span>
-                                </div>
-                        </div>
+            
                         <div class="col-md-2">
                             <select class="form-control" name="tahun">
                             <?php for ($i=2000; $i <date('Y')+1 ; $i++) { ?>
@@ -48,16 +39,23 @@
                             </select>
                         </div>
             
-            
-            <div class="col-md-1 text-right">
-            </div>
             <div class="col-md-3 text-right">
                             <select class="form-control" name="desa">
-                            <?php foreach ($this->db->get_where('desa',['id_kecamatan'=>11])->result() as $k => $v) { ?>
+                            <?php foreach ($this->db->get_where('desa',['id_kecamatan'=>get_kec_by_pus($this->session->userdata('id_puskesmas'))])->result() as $k => $v) { ?>
                                 <option value="<?=$v->id_desa?>"><?=$v->nama_desa?></option>
                             <?php } ?>
                             </select>
                 </div>
+                <div class="col-md-5">
+                                <div class="input-group">
+                                    <input type="file" class="form-control" name="filenilaigizi" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-info remove">
+                                            <span class="glyphicon glyphicon-upload"></span> Upload Excel
+                                        </button>
+                                    </span>
+                                </div>
+                        </div>
             </form>
         </div>
         <table class="table table-bordered table-hover table-condensed" style="margin-bottom: 10px">
