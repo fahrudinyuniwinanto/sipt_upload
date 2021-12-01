@@ -9,7 +9,9 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h2><b>List Nilai Gizi</b></h2>
+                    
+                    <h2><b>List Nilai <?php $prog=substr($this->session->userdata('id_program'),0,1) ?>
+                    <?=($prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":"-")))?></b></h2>
                     <?php if ($this->session->userdata('message') != '') {?>
                     <div class="alert alert-success alert-dismissable">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -22,10 +24,11 @@
             <div class="col-md-0">
                 <?php //echo anchor(site_url('tbnilaidata_gizi/create'),'Create', 'class="btn btn-primary"'); ?>
             </div>
-            <form enctype="multipart/form-data" action="<?= base_url() ?>ReadExcel/importNilaiGizi" method="post">
+            <form enctype="multipart/form-data" action="<?= base_url() ?>ReadExcel/importNilai" method="post">
             
                         <div class="col-md-2">
                             <select class="form-control" name="tahun">
+                            <option value="">>> Pilih Tahun</option>
                             <?php for ($i=2000; $i <date('Y')+1 ; $i++) { ?>
                                 <option value="<?=$i?>"><?=$i?></option>
                             <?php } ?>
@@ -33,6 +36,7 @@
                         </div>
                         <div class="col-md-2">
                             <select class="form-control" name="bulan">
+                            <option value="">>> Pilih Bulan</option>
                             <?php for ($i=1; $i <13 ; $i++) { ?>
                                 <option value="<?=$i?>"><?=str_bulan($i)?></option>
                             <?php } ?>
@@ -41,14 +45,18 @@
             
             <div class="col-md-3 text-right">
                             <select class="form-control" name="desa">
-                            <?php foreach ($this->db->get_where('desa',['id_kecamatan'=>get_kec_by_pus($this->session->userdata('id_puskesmas'))])->result() as $k => $v) { ?>
-                                <option value="<?=$v->id_desa?>"><?=$v->nama_desa?></option>
+                                <option value="">>> Pilih Desa</option>
+                            <?php foreach ($this->db->get_where('desa',['kokec'=>$this->session->userdata('id_puskesmas')])->result() as $k => $v) { ?>
+                                <option value="<?=$v->ID?>"><?=$v->nades?></option>
                             <?php } ?>
                             </select>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-1">
+                                
+                        </div>
+                        <div class="col-md-4">
                                 <div class="input-group">
-                                    <input type="file" class="form-control" name="filenilaigizi" />
+                                    <input type="file" class="form-control" name="filenilai" />
                                     <span class="input-group-btn">
                                         <button type="submit" class="btn btn-info remove">
                                             <span class="glyphicon glyphicon-upload"></span> Upload Excel
@@ -62,7 +70,7 @@
             <thead class="thead-light">
             <tr>
                 <th class="text-center">No</th>
-		<th class="text-center">ID</th>
+		<!-- <th class="text-center">ID</th> -->
 		<th class="text-center">NILAI</th>
 		<th class="text-center">SUMBERDATA</th>
 		<th class="text-center">KODE</th>
@@ -75,19 +83,20 @@
             </tr>
             </thead>
 			<tbody><?php
+            // print_r($tbnilaidata_gizi_data);die();
             foreach ($tbnilaidata_gizi_data as $tbnilaidata_gizi)
             {
                 ?>
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
-			<td><?php echo $tbnilaidata_gizi->ID ?></td>
+			<!-- <td><?php //echo $tbnilaidata_gizi->ID ?></td> -->
 			<td><?php echo $tbnilaidata_gizi->NILAI ?></td>
 			<td><?php echo $tbnilaidata_gizi->SUMBERDATA ?></td>
 			<td><?php echo $tbnilaidata_gizi->KODE ?></td>
 			<td><?php echo $tbnilaidata_gizi->TAHUN ?></td>
 			<td><?php echo str_bulan($tbnilaidata_gizi->BULAN) ?></td>
-			<td><?php echo @$this->db->get_where("puskesmas",["id"=>$tbnilaidata_gizi->PUSKESMAS])->row()->puskesmas ?></td>
-			<td><?php echo $this->db->get_where('desa',['id_desa'=>$tbnilaidata_gizi->DESA])->row()->nama_desa  ?></td>
+			<td><?php echo @$this->db->get_where("puskesmas",["pkid"=>$tbnilaidata_gizi->PUSKESMAS])->row()->puskesmas ?></td>
+			<td><?php echo $this->db->get_where('desa',['kodes'=>$tbnilaidata_gizi->DESA])->row()->nades; ?></td>
 			<td><?php echo $tbnilaidata_gizi->TGL_ENTRY ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 

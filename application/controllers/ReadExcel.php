@@ -59,10 +59,17 @@ class ReadExcel extends CI_Controller
   }
 
   
-  public function importNilaiGizi()
+  public function importNilai()
   {
+    $prog=substr($this->session->userdata('id_program'),0,1);
+    // $tbl = $prog=="I"?"tbnilaidata_ibu":($prog=="A"?"tbnilaidata_anak":($prog=="G"?"tbnilaidata_gizi":""));
+    $tbl = getTableProgram($prog);
+    if($this->input->post('tahun')==""||$this->input->post('bulan')==""||$this->input->post('desa')==""){
+      $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> Tahun, bulan dan desa wajib diisi!');
+    redirect($_SERVER['HTTP_REFERER']); //redirect back
+    }
     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-    $spreadsheet = $reader->load($_FILES['filenilaigizi']['tmp_name']);
+    $spreadsheet = $reader->load($_FILES['filenilai']['tmp_name']);
     $d = $spreadsheet->getSheet(0)->toArray();
     $data = $spreadsheet->getActiveSheet()->toArray();
     $jmlDataTerinsert = 0;
@@ -78,7 +85,7 @@ class ReadExcel extends CI_Controller
         // die("asdfkljasdf".$k);
         continue;
       }
-       $hasit = $this->db->get_where('tbnilaidata_gizi',[
+       $hasit = $this->db->get_where($tbl,[
         'TAHUN' => $this->input->post('tahun'),
           'BULAN' => $this->input->post('bulan'),
           'PUSKESMAS' => $this->session->userdata('id_puskesmas'),//ambil dari sesion pelogin
@@ -87,17 +94,17 @@ class ReadExcel extends CI_Controller
           'SUMBERDATA' =>$this->session->userdata('id_program'),
       ])->row();
 
-      //print_r($hasit);die("asdfasdfasdadsf");
       if(isset($hasit)){
+        // print_r($hasit);die("asdfasdfasdadsf");
         $this->db->where('ID',$hasit->ID);
-        $this->db->update('tbnilaidata_gizi', [
+        $this->db->update($tbl, [
           'NILAI' => $v[3],
           'TGL_ENTRY'=>date('Y-m-d H:i:s'),
         ]);
         continue;//skip loopingan
       }
  
-        $this->db->insert('tbnilaidata_gizi', [
+        $this->db->insert($tbl, [
           'NILAI' => $v[3],
           'SUMBERDATA' => $this->session->userdata('id_program'),
           'TAHUN' => $this->input->post('tahun'),
@@ -109,7 +116,7 @@ class ReadExcel extends CI_Controller
         ]);
         $jmlDataTerinsert++;
       }
-    $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> <strong>' . $jmlDataTerinsert . ' data KPCPEN</strong> berhasil diimport ke sql!');
+    $this->session->set_flashdata('message', '<i class=" fa fa-check-circle"></i> <strong>' . $jmlDataTerinsert . ' data </strong> berhasil diimport ke tabel '.$tbl.'!');
     redirect($_SERVER['HTTP_REFERER']); //redirect back
   }
 

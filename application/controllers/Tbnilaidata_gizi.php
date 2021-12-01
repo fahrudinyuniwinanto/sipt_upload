@@ -13,6 +13,8 @@ class Tbnilaidata_gizi extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    
+
     public function index()
     {   
         // sf_validate('M');

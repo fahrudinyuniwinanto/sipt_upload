@@ -230,6 +230,10 @@ function lookup()
     </div>
 <?php }
 
+function getTableProgram($prog){//aplikasi SIPT
+    return $prog=="I"?"tbnilaidata_ibu":($prog=="A"?"tbnilaidata_anak":($prog=="G"?"tbnilaidata_gizi":""));
+}
+
 
 function nama_hari($day){
 $dayList = array(

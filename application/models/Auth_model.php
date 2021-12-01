@@ -28,11 +28,11 @@ class Auth_model extends CI_Model {
     
 //    untuk mengambil data hasil login
     function data_login_multitable($username,$password,$tbl) {
-        $this->db->select("aa.*,aa.program as id_program,bb.id as id_puskesmas,bb.puskesmas as puskesmas,bb.alamat as alamat");
-        $this->db->where('aa.user', $username);
-        $this->db->where('aa.password', $password);
-        $this->db->join('puskesmas as bb','aa.puskesmas=bb.id');
-        return $this->db->get($tbl." as aa")->row();
+        // $this->db->select("aa.*,aa.program as id_program,bb.id as id_puskesmas,bb.puskesmas as puskesmas,bb.alamat as alamat");
+        $this->db->where('user', $username);
+        $this->db->where('password', $password);
+        // $this->db->join('puskesmas as bb','aa.puskesmas=bb.id');
+        return $this->db->get($tbl)->row();
     }
 }
 

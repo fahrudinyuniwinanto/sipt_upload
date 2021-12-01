@@ -5,7 +5,6 @@ if (!defined('BASEPATH'))
 
 class Tbnilaidata_gizi_model extends CI_Model
 {
-
     public $table = 'tbnilaidata_gizi';
     public $id = 'ID';
     public $order = 'DESC';
@@ -44,16 +43,18 @@ class Tbnilaidata_gizi_model extends CI_Model
 	$this->db->or_like('DESA', $q);
 	$this->db->or_like('TGL_ENTRY', $q);
 	$this->db->group_end();
-            $this->db->from($this->table);
+    if($this->session->userdata('id_puskesmas')!=""){
+        $this->db->where('PUSKESMAS', $this->session->userdata('id_puskesmas'));
+        }
+            $this->db->from(getTableProgram(substr($this->session->userdata('id_program'),0,1)));
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL) {
-        $this->db->order_by($this->id, $this->order);
-        // $this->db->where('isactive', 1);
-        $this->db->group_start();
-        // $this->db->like('', $q);
+        // $this->db->select("*,CAST(DESA as CHAR) as DESA");
+    $this->db->order_by($this->id, $this->order);
+    $this->db->group_start();
 	$this->db->like('ID', $q);
 	$this->db->or_like('NILAI', $q);
 	$this->db->or_like('SUMBERDATA', $q);
@@ -64,8 +65,13 @@ class Tbnilaidata_gizi_model extends CI_Model
 	$this->db->or_like('DESA', $q);
 	$this->db->or_like('TGL_ENTRY', $q);
 	$this->db->group_end();
-            $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
+    if($this->session->userdata('id_puskesmas')!=""){
+    $this->db->where('PUSKESMAS', $this->session->userdata('id_puskesmas'));
+    }
+    
+    $this->db->limit($limit, $start);
+    return $this->db->get(getTableProgram(substr($this->session->userdata('id_program'),0,1)))->result();
+    // die($this->db->last_query());
     }
 
     // insert data

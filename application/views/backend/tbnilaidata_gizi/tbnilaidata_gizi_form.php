@@ -14,9 +14,11 @@
         
         <form action="<?php echo $action; ?>" method="post">
         <div class="ibox-content">
+        <div class="row">
+        <div class="col-lg-6">
 	    <div class="form-group">
             <label for="double">ID <?php echo form_error('ID') ?></label>
-            <input type="text" class="form-control" name="ID" id="ID" placeholder="ID" value="<?php echo $ID; ?>" />
+            <input type="text" class="form-control" name="ID" id="ID" placeholder="ID" value="<?php echo $ID; ?>" readonly/>
         </div>
 	    <div class="form-group">
             <label for="int">NILAI <?php echo form_error('NILAI') ?></label>
@@ -24,35 +26,45 @@
         </div>
 	    <div class="form-group">
             <label for="varchar">SUMBERDATA <?php echo form_error('SUMBERDATA') ?></label>
-            <input type="text" class="form-control" name="SUMBERDATA" id="SUMBERDATA" placeholder="SUMBERDATA" value="<?php echo $SUMBERDATA; ?>" />
+            <input type="text" class="form-control" name="SUMBERDATA" id="SUMBERDATA" placeholder="SUMBERDATA" value="<?php echo $SUMBERDATA; ?>" readonly/>
         </div>
+        
 	    <div class="form-group">
             <label for="int">KODE <?php echo form_error('KODE') ?></label>
-            <input type="text" class="form-control" name="KODE" id="KODE" placeholder="KODE" value="<?php echo $KODE; ?>" />
+            <input type="text" class="form-control" name="KODE" id="KODE" placeholder="KODE" value="<?php echo $KODE; ?>" readonly />
         </div>
+        </div>
+        <div class="col-lg-6">
 	    <div class="form-group">
             <label for="int">TAHUN <?php echo form_error('TAHUN') ?></label>
-            <input type="text" class="form-control" name="TAHUN" id="TAHUN" placeholder="TAHUN" value="<?php echo $TAHUN; ?>" />
+            <select class="form-control" name="tahun">
+                            <option value="">>> Pilih Tahun</option>
+                            <?php for ($i=2000; $i <date('Y')+1 ; $i++) { ?>
+                                <option <?php if($TAHUN==$i){echo "selected";}?> value="<?=$i?>"><?=$i?></option>
+                            <?php } ?>
+                            </select>
         </div>
+        
 	    <div class="form-group">
             <label for="int">BULAN <?php echo form_error('BULAN') ?></label>
-            <input type="text" class="form-control" name="BULAN" id="BULAN" placeholder="BULAN" value="<?php echo $BULAN; ?>" />
+            <select class="form-control" name="bulan">
+                            <option value="">>> Pilih Bulan</option>
+                            <?php for ($i=1; $i <13 ; $i++) { ?>
+                                <option <?php if($BULAN==$i){echo "selected";}?> value="<?=$i?>"><?=str_bulan($i)?></option>
+                            <?php } ?>
+                            </select>
         </div>
-	    <div class="form-group">
-            <label for="varchar">PUSKESMAS <?php echo form_error('PUSKESMAS') ?></label>
-            <input type="text" class="form-control" name="PUSKESMAS" id="PUSKESMAS" placeholder="PUSKESMAS" value="<?php echo $PUSKESMAS; ?>" />
-        </div>
-	    <div class="form-group">
-            <label for="varchar">DESA <?php echo form_error('DESA') ?></label>
-            <input type="text" class="form-control" name="DESA" id="DESA" placeholder="DESA" value="<?php echo $DESA; ?>" />
-        </div>
+	   
 	    <div class="form-group">
             <label for="datetime">TGL ENTRY <?php echo form_error('TGL_ENTRY') ?></label>
-            <input type="text" class="form-control" name="TGL_ENTRY" id="TGL_ENTRY" placeholder="TGL ENTRY" value="<?php echo $TGL_ENTRY; ?>" />
+            <input type="text" class="form-control" name="TGL_ENTRY" id="TGL_ENTRY" placeholder="TGL ENTRY" value="<?php echo $TGL_ENTRY; ?>" readonly/>
         </div>
-	    <input type="hidden" name="" value="<?php echo $; ?>" /> 
+        <input type="hidden" name="" value="<?php echo $ID; ?>" /> 
 	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
 	    <a href="<?php echo site_url('tbnilaidata_gizi') ?>" class="btn btn-default">Cancel</a>
+        </div>
+	   
+	</div>
 	</div>
             </form>
         </div>

@@ -81,11 +81,12 @@ $CI->load->model('User_model');
                                 <?php } ?>
                             </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Puskesmas <?=$this->session->userdata('username') ?></strong>
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Puskesmas <?=$this->db->get_where("puskesmas",['pkid'=>$this->session->userdata('id_puskesmas')])->row()->puskesmas ?></strong>
                                     </span> <span class="text-muted text-xs block">Tentang <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="#"><?= $this->session->userdata('email') ?></a></li>
                                 <li><a href="#"><?= $this->session->userdata('telp') ?></a></li>
+                                <li><a href="#">Kode Program: <?= $this->session->userdata('id_program') ?></a></li>
+                                <li><a href="#">Program: <?= $this->db->get_where("tbprogram",['kode'=>$this->session->userdata('id_program')])->row()->nama ?></a></li>
                                 <li class="divider"></li>
                                 <li><a href="<?= base_url() ?>auth/logout">Keluar</a></li>
                             </ul>
@@ -94,7 +95,8 @@ $CI->load->model('User_model');
                             ER+
                         </div>
                     </li>
-                    <li><a href="<?= base_url() ?>Tbnilaidata_gizi"><i class="fa fa-database"></i> <span class="nav-label">Import Data Nilai Gizi</span><span class="label label-primary pull-right"></span></a></li>
+                    <li><a href="<?= base_url() ?>Tbnilaidata_gizi"><i class="fa fa-database"></i> <span class="nav-label">Import Data Nilai <?php $prog=substr($this->session->userdata('id_program'),0,1) ?>
+                    <?=($prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":"-")))?></span><span class="label label-primary pull-right"></span></a></li>
                 </ul>
 
             </div>
@@ -107,7 +109,7 @@ $CI->load->model('User_model');
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                         <form role="search" class="navbar-form-custom" action="search_results.html">
                             <div class="form-group">
-                                <input type="text" placeholder="Cari apa ..." class="form-control" name="top-search" id="top-search">
+                                <!-- <input type="text" placeholder="Cari apa ..." class="form-control" name="top-search" id="top-search"> -->
                             </div>
                         </form>
                     </div>
