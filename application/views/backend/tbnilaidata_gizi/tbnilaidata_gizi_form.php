@@ -9,7 +9,8 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h2 style="margin-top:0px"><?php echo $button ?> Tbnilaidata_gizi </h2>
+                    <h2 style="margin-top:0px"><?php echo $button ?> <?php $prog=substr($this->session->userdata('id_program'),0,1) ?>
+                    <?=($prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":"-")))?> </h2>
                 </div>
         
         <form action="<?php echo $action; ?>" method="post">

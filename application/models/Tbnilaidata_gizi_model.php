@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Tbnilaidata_gizi_model extends CI_Model
 {
-    public $table = 'tbnilaidata_gizi';
+    public $table = '';
     public $id = 'ID';
     public $order = 'DESC';
 
@@ -18,14 +18,14 @@ class Tbnilaidata_gizi_model extends CI_Model
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();
+        return $this->db->get(getTableProgram(substr($this->session->userdata('id_program'),0,1)))->result();
     }
 
     // get data by id
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        return $this->db->get(getTableProgram(substr($this->session->userdata('id_program'),0,1)))->row();
     }
     
     // get total rows
@@ -77,27 +77,28 @@ class Tbnilaidata_gizi_model extends CI_Model
     // insert data
     function insert($data)
     {
-        $this->db->insert($this->table, $data);
+        $this->db->insert(getTableProgram(substr($this->session->userdata('id_program'),0,1)), $data);
     }
 
     // update data
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
+        $this->db->update(getTableProgram(substr($this->session->userdata('id_program'),0,1)), $data);
     }
 
     // delete data
     function delete($id)
     {
+        
         $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        $this->db->delete(getTableProgram(substr($this->session->userdata('id_program'),0,1)));
     }
 
     // move to bin
     function bin($id){
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, array('isactive'=>0));
+        $this->db->update(getTableProgram(substr($this->session->userdata('id_program'),0,1)), array('isactive'=>0));
     }
 
 }

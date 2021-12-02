@@ -88,7 +88,7 @@ class ReadExcel extends CI_Controller
        $hasit = $this->db->get_where($tbl,[
         'TAHUN' => $this->input->post('tahun'),
           'BULAN' => $this->input->post('bulan'),
-          'PUSKESMAS' => $this->session->userdata('id_puskesmas'),//ambil dari sesion pelogin
+          'PUSKESMAS' => $this->session->userdata('id_puskesmas'),//ambil dari session pelogin
           'DESA' => $this->input->post('desa'),
           'KODE' => $v[4],
           'SUMBERDATA' =>$this->session->userdata('id_program'),

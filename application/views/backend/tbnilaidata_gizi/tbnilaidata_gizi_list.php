@@ -47,7 +47,7 @@
                             <select class="form-control" name="desa">
                                 <option value="">>> Pilih Desa</option>
                             <?php foreach ($this->db->get_where('desa',['kokec'=>$this->session->userdata('id_puskesmas')])->result() as $k => $v) { ?>
-                                <option value="<?=$v->ID?>"><?=$v->nades?></option>
+                                <option value="<?=strlen($v->ID)==1?"0".$v->ID:$v->ID?>"><?=$v->nades?></option>
                             <?php } ?>
                             </select>
                 </div>
@@ -96,7 +96,7 @@
 			<td><?php echo $tbnilaidata_gizi->TAHUN ?></td>
 			<td><?php echo str_bulan($tbnilaidata_gizi->BULAN) ?></td>
 			<td><?php echo @$this->db->get_where("puskesmas",["pkid"=>$tbnilaidata_gizi->PUSKESMAS])->row()->puskesmas ?></td>
-			<td><?php echo $this->db->get_where('desa',['kodes'=>$tbnilaidata_gizi->DESA])->row()->nades; ?></td>
+			<td><?php echo @$this->db->get_where('desa',['kodes'=>$tbnilaidata_gizi->DESA])->row()->nades; ?></td>
 			<td><?php echo $tbnilaidata_gizi->TGL_ENTRY ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 

@@ -214,7 +214,6 @@ class Tbnilaidata_gizi extends CI_Controller
     {
         // sf_validate('D');
         $row = $this->Tbnilaidata_gizi_model->get_by_id($id);
-
         if ($row) {
             /*$data = array(
                 'isactive'=>0,
