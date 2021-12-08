@@ -231,7 +231,10 @@ function lookup()
 <?php }
 
 function getTableProgram($prog){//aplikasi SIPT
-    return $prog=="I"?"tbnilaidata_ibu":($prog=="A"?"tbnilaidata_anak":($prog=="G"?"tbnilaidata_gizi":""));
+    return $prog=="I"?"tbnilaidata_ibu":($prog=="A"?"tbnilaidata_anak":($prog=="G"?"tbnilaidata_gizi":($prog=="R"?"tbnilaidata_remaja":"")));
+}
+function getLabelProgram($prog){//aplikasi SIPT
+    return $prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":($prog=="R"?"Remaja":"")));
 }
 
 

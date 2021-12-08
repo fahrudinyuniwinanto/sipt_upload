@@ -1,3 +1,4 @@
+<?php $kode_puskesmas = $this->db->get_where("puskesmas",['pkid'=>$this->session->userdata('id_puskesmas')])->row()->kode ?>
 <!doctype html>
 <!--Subscribe Youtube Channel Peternak Kode on https://youtube.com/c/peternakkode-->
 <html>
@@ -11,7 +12,7 @@
                 <div class="ibox-title">
                     
                     <h2><b>List Nilai <?php $prog=substr($this->session->userdata('id_program'),0,1) ?>
-                    <?=($prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":"-")))?></b></h2>
+                    <?=getLabelProgram($prog)?></b></h2>
                     <?php if ($this->session->userdata('message') != '') {?>
                     <div class="alert alert-success alert-dismissable">
                                 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -47,7 +48,7 @@
                             <select class="form-control" name="desa">
                                 <option value="">>> Pilih Desa</option>
                             <?php foreach ($this->db->get_where('desa',['kokec'=>$this->session->userdata('id_puskesmas')])->result() as $k => $v) { ?>
-                                <option value="<?=strlen($v->ID)==1?"0".$v->ID:$v->ID?>"><?=$v->nades?></option>
+                                <option value="<?=$v->kodes?>"><?=$v->nades?></option>
                             <?php } ?>
                             </select>
                 </div>
@@ -72,13 +73,13 @@
                 <th class="text-center">No</th>
 		<!-- <th class="text-center">ID</th> -->
 		<th class="text-center">NILAI</th>
-		<th class="text-center">SUMBERDATA</th>
+		<th class="text-center">NAMA DATA</th>
 		<th class="text-center">KODE</th>
-		<th class="text-center">TAHUN</th>
 		<th class="text-center">BULAN</th>
+		<th class="text-center">TAHUN</th>
 		<th class="text-center">PUSKESMAS</th>
 		<th class="text-center">DESA</th>
-		<th class="text-center">TGL ENTRY</th>
+		<th class="text-center">DIENTRI PADA</th>
 		<th class="text-center">Action</th>
             </tr>
             </thead>
@@ -90,20 +91,20 @@
                 <tr>
 			<td width="80px"><?php echo ++$start ?></td>
 			<!-- <td><?php //echo $tbnilaidata_gizi->ID ?></td> -->
-			<td><?php echo $tbnilaidata_gizi->NILAI ?></td>
-			<td><?php echo $tbnilaidata_gizi->SUMBERDATA ?></td>
+			<td><strong><?php echo $tbnilaidata_gizi->NILAI ?></strong></td>
+			<td><?php echo $tbnilaidata_gizi->SUMBERDATA." - ".$this->db->get_where('tbprogram',['kode'=>$tbnilaidata_gizi->SUMBERDATA])->row()->nama ?></td>
 			<td><?php echo $tbnilaidata_gizi->KODE ?></td>
-			<td><?php echo $tbnilaidata_gizi->TAHUN ?></td>
 			<td><?php echo str_bulan($tbnilaidata_gizi->BULAN) ?></td>
+			<td><?php echo $tbnilaidata_gizi->TAHUN ?></td>
 			<td><?php echo @$this->db->get_where("puskesmas",["pkid"=>$tbnilaidata_gizi->PUSKESMAS])->row()->puskesmas ?></td>
-			<td><?php echo @$this->db->get_where('desa',['kodes'=>$tbnilaidata_gizi->DESA])->row()->nades; ?></td>
+			<td><?php echo @$this->db->get_where('desa',['kodes'=>$tbnilaidata_gizi->DESA,'kokec'=>$tbnilaidata_gizi->PUSKESMAS])->row()->nades; ?></td>
 			<td><?php echo $tbnilaidata_gizi->TGL_ENTRY ?></td>
 			<td style="text-align:center" width="200px">
 				<?php 
 				echo anchor(site_url('tbnilaidata_gizi/read/'.$tbnilaidata_gizi->ID),'Read','class="text-navy"'); 
 				echo ' | '; 
-				echo anchor(site_url('tbnilaidata_gizi/update/'.$tbnilaidata_gizi->ID),'Update','class="text-navy"'); 
-				echo ' | '; 
+				//echo anchor(site_url('tbnilaidata_gizi/update/'.$tbnilaidata_gizi->ID),'Update','class="text-navy"'); 
+				//echo ' | '; 
 				echo anchor(site_url('tbnilaidata_gizi/delete/'.$tbnilaidata_gizi->ID),'Delete','class="text-navy" onclick="javascript: return confirm(\'Yakin hapus data?\')"'); 
 				?>
 			</td>

@@ -96,7 +96,7 @@ $CI->load->model('User_model');
                         </div>
                     </li>
                     <li><a href="<?= base_url() ?>Tbnilaidata_gizi"><i class="fa fa-database"></i> <span class="nav-label">Import Data Nilai <?php $prog=substr($this->session->userdata('id_program'),0,1) ?>
-                    <?=($prog=="I"?"Ibu":($prog=="A"?"Anak":($prog=="G"?"Gizi":"-")))?></span><span class="label label-primary pull-right"></span></a></li>
+                    <?=getLabelProgram($prog)?></span><span class="label label-primary pull-right"></span></a></li>
                 </ul>
 
             </div>

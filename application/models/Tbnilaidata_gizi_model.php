@@ -70,6 +70,7 @@ class Tbnilaidata_gizi_model extends CI_Model
     }
     
     $this->db->limit($limit, $start);
+    $this->db->order_by('TGL_ENTRY', 'DESC');
     return $this->db->get(getTableProgram(substr($this->session->userdata('id_program'),0,1)))->result();
     // die($this->db->last_query());
     }
